@@ -7,18 +7,19 @@ int main()
     cin.tie(0);
     cout.tie(0);
 
-    int t;
-    cin >> t;
-    while (t--)
+    int N;
+    cin >> N;
+    cin.ignore();
+
+    while (N--)
     {
+        string s;
+        getline(cin, s);
+        stringstream in(s);
         int n, sum = 0;
-        while (cin >> n)
+        while (in >> n)
         {
             sum += n;
-            if (cin.peek() == '\n' || cin.peek() == EOF)
-            {
-                break;
-            }
         }
         cout << sum << '\n';
     }
