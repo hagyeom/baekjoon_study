@@ -1,25 +1,30 @@
-#include <iostream>
-#include <vector>
+#include <bits/stdc++.h>
 using namespace std;
 
 int main()
 {
-    int n, v, input, count = 0;
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+
+    int n;
     cin >> n;
-    vector<int> arr;
-    for (int i = 0; i < n; i ++)
-    {
-        cin >> input;
-        arr.push_back(input);
-    }
-    cin >> v;
+    vector<int> vec(n);
     for (int i = 0; i < n; i++)
     {
-        if (arr[i] == v)
+        cin >> vec[i];
+    }
+    int v;
+    cin >> v;
+    int count = 0;
+    for (int i = 0; i < n; i++)
+    {
+        if (vec[i] == v)
         {
             count++;
         }
     }
-    cout << count;
+    cout << count << '\n';
+
     return 0;
 }
