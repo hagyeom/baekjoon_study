@@ -1,43 +1,58 @@
-#include <iostream>
-#include <string>
-#include <algorithm> // reverse 함수를 사용하기 위함
+// 백준 10757번: 큰 수 A + B
+#include <bits/stdc++.h>
 using namespace std;
 
-// 문자열로 표현된 두 큰 수를 더하는 함수
-string addLargeNumbers(string a, string b) {
-    string result = ""; // 결과를 저장할 변수
-    int carry = 0; // 자리 올림수를 저장할 변수
+void addLargeNumbers(const string &num1, const string &num2)
+{
+    stack<int> stack1, stack2, result;
 
-    // 두 수의 길이가 다를 수 있으므로, 길이를 맞추기 위해 짧은 수 앞을 0으로 채웁니다.
-    while (a.length() < b.length()) a = "0" + a;
-    while (b.length() < a.length()) b = "0" + b;
-
-    // 두 수를 끝자리부터 더해나갑니다.
-    for (int i = a.length() - 1; i >= 0; i--) {
-        int sum = (a[i] - '0') + (b[i] - '0') + carry; // 두 수와 자리 올림수를 더함
-        carry = sum / 10; // 다음 자리로 넘어갈 올림수 계산
-        result += (sum % 10) + '0'; // 현재 자리수를 결과에 추가
+    // num1과 num2의 각 자릿수를 스택에 저장
+    for (char digit : num1)
+    {
+        stack1.push(digit - '0');
+    }
+    for (char digit : num2)
+    {
+        stack2.push(digit - '0');
     }
 
-    // 마지막으로 올림수가 남아있다면 결과에 추가
-    if (carry) result += carry + '0';
+    int carry = 0; // 받아올림
+    // 두 숫자의 각 자릿수를 더하는 과정
+    while (!stack1.empty() || !stack2.empty() || carry)
+    {
+        int sum = carry;
+        if (!stack1.empty())
+        {
+            sum += stack1.top();
+            stack1.pop();
+        }
+        if (!stack2.empty())
+        {
+            sum += stack2.top();
+            stack2.pop();
+        }
+        carry = sum / 10;
+        result.push(sum % 10);
+    }
 
-    // 결과가 역순으로 계산되었으므로 뒤집어줍니다.
-    reverse(result.begin(), result.end());
-
-    // 결과 반환
-    return result;
+    // 결과 출력
+    while (!result.empty())
+    {
+        cout << result.top();
+        result.pop();
+    }
+    cout << '\n';
 }
 
-int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
-    string A, B;
-    cin >> A >> B; // 큰 수를 문자열로 입력 받음
+int main()
+{
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
 
-    // 두 큰 수를 더한 결과를 출력
-    cout << addLargeNumbers(A, B) << endl;
+    string a, b;
+    cin >> a >> b;
+    addLargeNumbers(a, b);
 
     return 0;
 }
